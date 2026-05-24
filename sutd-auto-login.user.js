@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Auto Login & OTP
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/pcider
 // @version      2026-05-22
 // @description  try to take over the world! :3
 // @author       cider

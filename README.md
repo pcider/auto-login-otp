@@ -2,9 +2,11 @@
 
 Because my university's login page is so annoying.
 
-## Usage:
+## Installation & Usage:
 
-To use the autofill functionality, key in the values shown below in `autofill.js`. 
+Install [Tampermonkey](https://www.tampermonkey.net/) and then click [this link](https://raw.githubusercontent.com/pcider/auto-login-otp/refs/heads/main/sutd-auto-login.user.js) to install it.
+
+To use the autofill functionality, edit in the values shown below in `sutd-auto-login.user.js`. 
 If your browser already autofills for you, you can leave it empty. (better to not put your passwords in scripts!)
 
 ```js
