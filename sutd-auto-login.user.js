@@ -11,7 +11,7 @@
 
 // leave empty if you dont want the script to autofill for you
 const USERNAME = '';
-const PASSWORD = ''
+const PASSWORD = '';
 
 // in your authenticator app, you should get a URL like
 // "otpauth://totp/ease.sutd.edu.sg:<STUDENT_ID>?secret=<SECRET>&issuer=ease.sutd.edu.sg"
@@ -30,8 +30,14 @@ const USERNAME_FIELD_SELECTOR = "input[autocomplete='username']";
 const PASSWORD_FIELD_SELECTOR = "input[type='password']";
 const SUBMIT_BUTTON_SELECTOR = "input[type='submit']";
 const TOTP_FIELD_SELECTOR = "input[name='credentials.passcode']";
+const ERROR_ICON_SELECTOR = ".error-16";
 
 window.jsOTP = null;
+
+const updateInput = input => {
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+};
 
 const main = (() => {
 let tries = 0;
@@ -43,32 +49,45 @@ const interval = setInterval(() => {
         clearInterval(interval);
         return;
     }
-    console.log('meow');
-    const loginInput = document.querySelector(USERNAME_FIELD_SELECTOR);
-    const pwInput = document.querySelector(PASSWORD_FIELD_SELECTOR);
-    const submitBtn = document.querySelector(SUBMIT_BUTTON_SELECTOR);
+    console.log('meow', tries);
+    const sel = document.querySelector.bind(document);
+    const loginInput = sel(USERNAME_FIELD_SELECTOR);
+    const pwInput = sel(PASSWORD_FIELD_SELECTOR);
+    const submitBtn = sel(SUBMIT_BUTTON_SELECTOR);
 
-    const totpInput = document.querySelector(TOTP_FIELD_SELECTOR);
+    const totpInput = sel(TOTP_FIELD_SELECTOR);
+    const errorIcon = sel(ERROR_ICON_SELECTOR);
+    const errorTextBox = errorIcon && errorIcon.parentNode.children[1];
 
     const isLoginPage = loginInput && pwInput && submitBtn;
-    const isOTPPage = totpInput && submitBtn;
-    if (isLoginPage) {
+    const isOTPPage = totpInput && !pwInput && submitBtn;
+    const isPwOnlyPage = pwInput && submitBtn;
+    const isError = !!errorIcon;
+
+    if (isError) {
+        errorTextBox.innerText += '\n.\n[Auto Login & OTP] error detected... bailing out'
+        clearInterval(interval);
+    } else if (isLoginPage) {
         if (USERNAME) loginInput.value = USERNAME;
         if (PASSWORD) pwInput.value = PASSWORD;
-        if (loginInput.textLength > 0 && pwInput.textLength > 0) {
-            loginInput.dispatchEvent(new Event('input', { bubbles: true }));
-            loginInput.dispatchEvent(new Event('change', { bubbles: true }));
-            pwInput.dispatchEvent(new Event('input', { bubbles: true }));
-            pwInput.dispatchEvent(new Event('change', { bubbles: true }));
+        if (AUTO_SUBMIT && loginInput.textLength > 0 && pwInput.textLength > 0) {
+            updateInput(loginInput);
+            updateInput(pwInput);
             submitBtn.click();
         } else {
             console.log("waiting for username & password...");
         }
+    } else if (isPwOnlyPage) {
+        if (PASSWORD) pwInput.value = PASSWORD;
+
+        if (AUTO_SUBMIT && pwInput.textLength > 0) {
+            updateInput(pwInput);
+            submitBtn.click();
+        }
     } else if (isOTPPage) {
         if (TOTP_SECRET) totpInput.value = new window.jsOTP.totp().getOtp(TOTP_SECRET);
         if (AUTO_SUBMIT && totpInput.textLength > 0) {
-            totpInput.dispatchEvent(new Event('input', { bubbles: true }));
-            totpInput.dispatchEvent(new Event('change', { bubbles: true }));
+            updateInput(totpInput);
             submitBtn.click();
         } else {
             console.log("waiting for TOTP...");
