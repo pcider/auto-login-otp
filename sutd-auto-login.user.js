@@ -23,7 +23,7 @@ const TOTP_SECRET = '';
 const AUTO_SUBMIT = true;
 
 
-const MAX_TRIES = 10; // try for 10 times with 500ms intervals before giving up.
+const MAX_TRIES = 21; // try for 21 times with 500ms intervals before giving up.
 const TIME_INTERVAL = 500; // 500ms
 
 const USERNAME_FIELD_SELECTOR = "input[autocomplete='username']";
