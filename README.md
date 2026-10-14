@@ -13,6 +13,8 @@ If your browser already autofills for you, you can leave it empty. (better to no
 
 You can access the script editor by clicking on Tampermonkey's icon (to the right of the URL textbox) > Dashboard > Auto Login & OTP. Now you can fill in the appropriate values.
 
+NOTE: For **Chrome** 138+ users, do allow Tampermonkey to [enable userscripts](https://www.tampermonkey.net/faq.php?q=Q209#Q209). 
+
 ```js
 // leave empty if you dont want the script to autofill for you
 const USERNAME = '<STUDENT_ID>';        
