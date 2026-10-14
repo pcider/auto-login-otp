@@ -22,10 +22,6 @@ const TOTP_SECRET = '';
 // set to true if you want the script to click the button 4 u
 const AUTO_SUBMIT = true;
 
-
-const MAX_TRIES = 21; // try for 21 times with 500ms intervals before giving up.
-const TIME_INTERVAL = 500; // 500ms
-
 const USERNAME_FIELD_SELECTOR = "input[autocomplete='username']";
 const PASSWORD_FIELD_SELECTOR = "input[type='password']";
 const SUBMIT_BUTTON_SELECTOR = "input[type='submit']";
@@ -70,7 +66,7 @@ const interval = setInterval(() => {
     } else if (isLoginPage) {
         if (USERNAME) loginInput.value = USERNAME;
         if (PASSWORD) pwInput.value = PASSWORD;
-        if (AUTO_SUBMIT && loginInput.value > 0 && pwInput.value > 0) {
+        if (AUTO_SUBMIT && loginInput.value != '' && pwInput.value != '') {
             updateInput(loginInput);
             updateInput(pwInput);
             submitBtn.click();
@@ -80,13 +76,13 @@ const interval = setInterval(() => {
     } else if (isPwOnlyPage) {
         if (PASSWORD) pwInput.value = PASSWORD;
 
-        if (AUTO_SUBMIT && pwInput.value > 0) {
+        if (AUTO_SUBMIT && pwInput.value != '') {
             updateInput(pwInput);
             submitBtn.click();
         }
     } else if (isOTPPage) {
         if (TOTP_SECRET) totpInput.value = new window.jsOTP.totp().getOtp(TOTP_SECRET);
-        if (AUTO_SUBMIT && totpInput.value > 0) {
+        if (AUTO_SUBMIT && totpInput.value != '') {
             updateInput(totpInput);
             submitBtn.click();
         } else {
