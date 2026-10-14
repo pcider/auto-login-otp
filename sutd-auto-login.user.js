@@ -49,7 +49,7 @@ const interval = setInterval(() => {
         clearInterval(interval);
         return;
     }
-    console.log('meow', tries);
+    console.log('meow', tries++);
     const sel = document.querySelector.bind(document);
     const loginInput = sel(USERNAME_FIELD_SELECTOR);
     const pwInput = sel(PASSWORD_FIELD_SELECTOR);
@@ -97,7 +97,6 @@ const interval = setInterval(() => {
         console.log('loginInput', loginInput);
         console.log('pwInput', pwInput);
         console.log('submitBtn', submitBtn);
-        tries++;
     }
 }, TIME_INTERVAL);
 });
