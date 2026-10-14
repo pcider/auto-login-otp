@@ -70,7 +70,7 @@ const interval = setInterval(() => {
     } else if (isLoginPage) {
         if (USERNAME) loginInput.value = USERNAME;
         if (PASSWORD) pwInput.value = PASSWORD;
-        if (AUTO_SUBMIT && loginInput.textLength > 0 && pwInput.textLength > 0) {
+        if (AUTO_SUBMIT && loginInput.value > 0 && pwInput.value > 0) {
             updateInput(loginInput);
             updateInput(pwInput);
             submitBtn.click();
@@ -80,13 +80,13 @@ const interval = setInterval(() => {
     } else if (isPwOnlyPage) {
         if (PASSWORD) pwInput.value = PASSWORD;
 
-        if (AUTO_SUBMIT && pwInput.textLength > 0) {
+        if (AUTO_SUBMIT && pwInput.value > 0) {
             updateInput(pwInput);
             submitBtn.click();
         }
     } else if (isOTPPage) {
         if (TOTP_SECRET) totpInput.value = new window.jsOTP.totp().getOtp(TOTP_SECRET);
-        if (AUTO_SUBMIT && totpInput.textLength > 0) {
+        if (AUTO_SUBMIT && totpInput.value > 0) {
             updateInput(totpInput);
             submitBtn.click();
         } else {
