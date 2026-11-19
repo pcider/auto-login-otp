@@ -22,6 +22,9 @@ const TOTP_SECRET = '';
 // set to true if you want the script to click the button 4 u
 const AUTO_SUBMIT = true;
 
+const MAX_TRIES = 21; // try for 21 times with 500ms intervals before giving up.
+const TIME_INTERVAL = 500; // 500ms
+
 const USERNAME_FIELD_SELECTOR = "input[autocomplete='username']";
 const PASSWORD_FIELD_SELECTOR = "input[type='password']";
 const SUBMIT_BUTTON_SELECTOR = "input[type='submit']";
